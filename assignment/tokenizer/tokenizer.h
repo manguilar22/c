@@ -2,6 +2,10 @@
 #define _TOKENIZER_
 
 
+/**
+ * Second MileStone
+ */
+
 /* Return true (non-zero) if c is a whitespace characer
    ('\t' or ' ').  
    Zero terminators are not printable (therefore false) */
@@ -15,7 +19,7 @@ int non_space_char(char c);
 /* Returns a pointer to the first character of the next 
    space-separated word in zero-terminated str.  Return a zero pointer if 
    str does not contain any words. */
-char word_start(char *str); 
+char *word_start(char *str);
 
 /* Returns a pointer to the first space character in
    zero-terminated str.  Return a zero pointer if 
@@ -24,8 +28,9 @@ char *word_end(char *str);
 
 /* Counts the number of words in the string argument. */
 int count_words(char *str);
+/////////////////////////////////////////////////////////
 
-/* Returns a fresly allocated new zero-terminated string 
+/* Returns a freshly allocated new zero-terminated string
    containing <len> chars from <inStr> */
 char *copy_str(char *inStr, short len);
 
