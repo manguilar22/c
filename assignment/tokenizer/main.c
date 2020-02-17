@@ -30,7 +30,10 @@ int main()
 	printf("Do Something Cooler:\t%c\n",*p);
 
 	 char arr[MAX_SIZE] = "ab bb cc";
-
+	 char test[MAX_SIZE];
+	 char *pa = word_start(arr);
+	 printf("%c\n",*pa);
+	 printf("%c\n",*word_start(test));
 
 
      return 0;
@@ -48,11 +51,17 @@ int count_words(char *str)
    str does not contain any words. */
 char *word_start(char *str)
 {
-    if ( *str == '\0') {
-        return NULL;
+    if ( str == NULL) {
+        return 0;
+    }
+    for (int i = 0; i < sizeof(str); i++)
+    {
+        if ( ! (str[i] != ' '))
+        {
+            return str;
+        }
     }
     return str;
-
 }
 
 /* Returns a pointer to the first space character in
