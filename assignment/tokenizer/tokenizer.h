@@ -6,7 +6,7 @@
  * Second MileStone
  */
 
-/* Return true (non-zero) if c is a whitespace characer
+/* Return true (non-zero) if c is a whitespace character
    ('\t' or ' ').  
    Zero terminators are not printable (therefore false) */
 int space_char(char c);
@@ -43,12 +43,15 @@ char *copy_str(char *inStr, short len);
      tokens[2] = "string" 
      tokens[3] = 0
 */
-char** tokenize(char* str);
 
 /* Prints all tokens. */
 void print_tokens(char **tokens);
 
 /* Frees all tokens and the vector containing themx. */
 void free_tokens(char **tokens);
+
+// Milestone Four
+char** tokenize(char* str);
+
 
 #endif

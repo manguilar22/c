@@ -20,21 +20,17 @@ int main()
 	printf("%s",scanner); 
 	} while (scanner != '\0'); 
 	*/
-	//printf("Space_Char:\t%d",space_char(' ')); 
-	//printf("Non-Space-Char:\t%d",non_space_char('\t')); 
 
+	 //char arr[MAX_SIZE] = "  ba bb cc";
+	 //char arr[MAX_SIZE] = "test1 test2";
+	 char arr[MAX_SIZE] = "a b c";
 
-	char a = 'a';
-    printf("Do something:\t%p\n",word_start(&a));
-	char *p = word_start(&a);
-	printf("Do Something Cooler:\t%c\n",*p);
-
-	 char arr[MAX_SIZE] = "  ba bb cc";
-	 char test[MAX_SIZE];
 	 char *pa = word_start(arr);
 	 char *pe = word_end(arr);
 	 int count = count_words(arr);
-	 printf("\n[+]Word Start:\t%c\n[+]Word End:\t%c\n[+]Word Count:\t%d\n",*pa,*pe,count);
+
+	 printf("\n[+]Word Start:%s\n[+]Word End:%s\n[+]Word Count:%d\n",pa,pe,count);
+
 
      return 0;
 
@@ -43,18 +39,16 @@ int main()
 /* Counts the number of words in the string argument. */
 int count_words(char *str)
 {
-    str = word_start(str);
+    int words = 0;
     if (str == 0)
         return 0;
-    int wordCount = 0;
-    while (str != 0)
+    while (*str)
     {
-        str = word_start(str);
-        str = word_end(str);
-        wordCount++;
+        if (*str == ' ')
+            words++;
+        ++str;
     }
-    return wordCount;
-
+    return words;
 }
 
 /**
@@ -87,29 +81,33 @@ char *word_end(char *str)
 {
     int i = 0;
     while (str[i] != '\0') {
-        if (space_char(str[i]) == 1)
+        if(space_char(str[i]) == 1)
+        {
             return &str[i];
+        }
         i++;
     }
     return 0;
 }
 
+
+/* Return true (non-zero) if c is a whitespace character
+   ('\t' or ' ').
+   Zero terminators are not printable (therefore false) */
 int space_char(char c)
 {
-//	if ((c == ' ' || c == '\t' )&& c != '\0')
-if ( c == ' ' || c == '\t')
-{
-    return 1;
-}
-return 0;
-}
-
-int non_space_char(char c) 
-{
-//	if ((c != '\t' || c !=' ') && c != '\0')
-if (c == ' ' || c == '\t' || c == '\0') {
+    if (c == ' '|| c == '\t')
+        return 1;
     return 0;
 }
-    return 1;
 
+
+/* Return true (non-zero) if c is a non-whitespace
+   character (not tab or space).
+   Zero terminators are not printable (therefore false) */
+int non_space_char(char c) 
+{
+    if ( c == ' ' || c == '\t' ||  c == '\0')
+        return 0;
+    return 1;
 }
