@@ -47,9 +47,10 @@ char *copy_str(char *inStr, short len);
 /* Prints all tokens. */
 void print_tokens(char **tokens);
 
-/* Frees all tokens and the vector containing themx. */
+/* Frees all tokens and the vector containing them. */
 void free_tokens(char **tokens);
 
+///////////////////////////////////////////////////////////////
 // Milestone Four
 char** tokenize(char* str);
 

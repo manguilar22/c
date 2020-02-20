@@ -1,9 +1,13 @@
-#include <stdio.h> 
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "tokenizer.h"
 
 #define MAX_SIZE 100
 
 void simple_ui(); // TODO:
+
+int string_length(char *string);
 
 // READ Chapter 6
 
@@ -12,7 +16,6 @@ int main()
 
 	char scanner[MAX_SIZE];
 
-	// Milestone 1: Echo  
 	/*
 	do { 
 	printf("(Prompt)>\t");
@@ -25,14 +28,70 @@ int main()
 	 //char arr[MAX_SIZE] = "test1 test2";
 	 char arr[MAX_SIZE] = "a b c";
 
-	 char *pa = word_start(arr);
-	 char *pe = word_end(arr);
-	 int count = count_words(arr);
+	 //char test[15] = "Hello World";
+     char *newTest = copy_str(arr,2);
+	 printf("[+] Print Test:%s\n\n",newTest);
 
-	 printf("\n[+]Word Start:%s\n[+]Word End:%s\n[+]Word Count:%d\n",pa,pe,count);
+    char *pa = word_start(arr);
+    char *pe = word_end(arr);
+    int count = count_words(arr);
+    int len = string_length(arr);
+    printf("\n[+]Word Start:%s\n[+]Word End:%s\n[+]Word Count:%d\nLength of string:%d\n",pa,pe,count,len);
 
 
-     return 0;
+
+    return 0;
+
+}
+
+// Helper Function: string length
+int string_length(char *string)
+{
+    int length = 0;
+    while (*string)
+    {
+        *string++;
+        length++;
+    }
+        return length - 1; // Minus one, because of strings ending with \0
+}
+
+/* Returns a freshly allocated new zero-terminated string
+   containing <len> chars from <inStr> */
+char *copy_str(char *inStr, short len)
+{
+    char *newStorage = malloc(len * sizeof(char*));
+    for (int i = 0; i< len; i++)
+    {
+        newStorage[i] = inStr[i];
+    }
+    return newStorage;
+}
+
+/* Returns a freshly allocated zero-terminated vector of freshly allocated
+   space-separated tokens from zero-terminated str.
+
+   For example, tokenize("hello world string") would result in:
+     tokens[0] = "hello"
+     tokens[1] = "world"
+     tokens[2] = "string"
+     tokens[3] = 0
+*/
+/* Prints all tokens. */
+void print_tokens(char **tokens)
+{
+
+}
+
+/* Frees all tokens and the vector containing them. */
+void free_tokens(char **tokens)
+{
+
+}
+
+char** tokenize(char* str)
+{
+
 
 }
 
