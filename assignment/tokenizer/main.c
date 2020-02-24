@@ -1,7 +1,9 @@
+
 #include <stdio.h>
 #include <stdlib.h>
-
 #include "tokenizer.h"
+
+
 
 #define MAX_SIZE 100
 
@@ -16,29 +18,30 @@ int main()
 
 	char scanner[MAX_SIZE];
 
-	/*
+    /*
+     * PROMPT
 	do { 
 	printf("(Prompt)>\t");
 	fgets(scanner,50,stdin); 
 	printf("%s",scanner); 
-	} while (scanner != '\0'); 
-	*/
+	} while (scanner != 0);
+    */
 
-	 //char arr[MAX_SIZE] = "  ba bb cc";
-	 //char arr[MAX_SIZE] = "test1 test2";
-	 char arr[MAX_SIZE] = "a b c";
+	// TEST Methods
+    char arr[MAX_SIZE] = "a b c";
 
-	 //char test[15] = "Hello World";
-     char *newTest = copy_str(arr,2);
-	 printf("[+] Print Test:%s\n\n",newTest);
+    //char *newTest = copy_str(arr,2);
+    //printf("[+] Print Test:%s\n\n",newTest);
 
     char *pa = word_start(arr);
     char *pe = word_end(arr);
     int count = count_words(arr);
     int len = string_length(arr);
-    printf("\n[+]Word Start:%s\n[+]Word End:%s\n[+]Word Count:%d\nLength of string:%d\n",pa,pe,count,len);
+    printf("\n[+]Word Start:%s\n[+]Word End:%s\n[+]Word Count:%d\n[+]Length of string:%d\n",pa,pe,count,len);
 
-
+    // Some Milestone
+    char **tokens = tokenize(arr);
+    print_tokens(tokens);
 
     return 0;
 
@@ -65,6 +68,7 @@ char *copy_str(char *inStr, short len)
     {
         newStorage[i] = inStr[i];
     }
+    newStorage[len] = '\0'; // What ?
     return newStorage;
 }
 
@@ -80,18 +84,43 @@ char *copy_str(char *inStr, short len)
 /* Prints all tokens. */
 void print_tokens(char **tokens)
 {
-
+    int index = 0;
+    while (tokens[index])
+    {
+        printf("[+] token index: %d => %s\n", index, tokens[index]);
+        index++;
+    }
 }
 
 /* Frees all tokens and the vector containing them. */
 void free_tokens(char **tokens)
 {
+    int index = 0;
+    while (tokens[index])
+    {
+        free(tokens[index]);
+        index++;
+    }
 
 }
 
+/* Tokenize String */
 char** tokenize(char* str)
 {
+    int index = 0;
+    int word_length = count_words(str);
+    char** tokens = (char**) malloc((word_length+1) * sizeof(char*));
 
+    while(index < word_length)
+    {
+        str = word_start(str);
+        char* word = copy_str(str,index+1);
+        str = word_end(str);
+        tokens[index] = word;
+
+        index++;
+    }
+    return tokens;
 
 }
 
@@ -107,7 +136,7 @@ int count_words(char *str)
             words++;
         ++str;
     }
-    return words;
+    return words+1;
 }
 
 /**
@@ -149,7 +178,6 @@ char *word_end(char *str)
     return 0;
 }
 
-
 /* Return true (non-zero) if c is a whitespace character
    ('\t' or ' ').
    Zero terminators are not printable (therefore false) */
@@ -159,7 +187,6 @@ int space_char(char c)
         return 1;
     return 0;
 }
-
 
 /* Return true (non-zero) if c is a non-whitespace
    character (not tab or space).
