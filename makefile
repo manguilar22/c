@@ -4,5 +4,7 @@ clean:
 build: 
 	cc main.c -o main
 run:   
-	./main  
+	./main
+
+
 
