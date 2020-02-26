@@ -4,8 +4,9 @@
 #include "tokenizer.c"
 
 // Linked List (github.com/robustUTEP)
-#include "llist.h"
 
+
+// MAX_SIZE for INPUT BUFFER
 #define MAX_SIZE 100
 
 int main()
@@ -15,33 +16,37 @@ int main()
 
     /*
      * PROMPT
-     *
      */
-
     printf("[+] Tokenizer Project, press \'q\' to quit\n");
-    do {
+    do
+        {
         printf("(Prompt)>\t");
-        fgets(scanner,50,stdin);
-        printf("%s",scanner);
+        fgets(scanner,MAX_SIZE,stdin);
 
-    char *copy = copy_str(scanner, sizeof(scanner));
+        if (*scanner != 'q' && *scanner != '!')
+        {
+            printf("\n[!] Your word is: %s\n", scanner);
 
-    char *pa = word_start(copy);
-    char *pe = word_end(copy);
-    int count = count_words(copy);
-    int len = string_length(copy);
+            char *copy = copy_str(scanner, sizeof(scanner));
 
-    printf("[-] Word Start: %s\n",pa);
-    printf("[-] Word End: %s\n",pe);
-    printf("[-] Word Count: %d\n",count);
-    printf("[-] Length of string: %d\n",len);
+            char *pa = word_start(copy);
+            char *pe = word_end(copy);
+            int count = count_words(copy);
+            int len = string_length(copy);
 
-    printf("\n[+] Printing Tokens [+]\n");
-    // Milestone
-    char **tokens = tokenize(copy);
-    print_tokens(tokens);
-    free_tokens(tokens);
-    } while (scanner != '\0');
+            // Functions Start Here
+            printf("[-] Word Start: %s\n", pa);
+            printf("[-] Word End: %s\n", pe);
+            printf("[-] Word Count: %d\n", count);
+            printf("[-] Length of string: %d\n", len);
+
+            printf("\n[+] Printing Tokens [+]\n");
+            // Milestone
+            char **tokens = tokenize(copy);
+            print_tokens(tokens);
+            free_tokens(tokens);
+        }
+    } while (*scanner != 'q');
 
     return 0;
 

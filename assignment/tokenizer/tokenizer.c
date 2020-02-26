@@ -1,6 +1,10 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "tokenizer.h"
 
+// Development
 char** tokenizeME(char* str);
+void print_ME(char **tokens);
 
 int string_length(char *string);
 
@@ -32,7 +36,7 @@ int string_length(char *string)
    containing <len> chars from <inStr> */
 char *copy_str(char *inStr, short len)
 {
-    char *newStorage = malloc(len * sizeof(char*));
+    char *newStorage = (char*) malloc(len+1 * sizeof(char*));
 
     int i = 0;
     while (len > i)
@@ -62,7 +66,7 @@ void print_tokens(char **tokens)
         printf("[*] token[%d] => %s\n", index, tokens[index]);
         index++;
     }
-    printf("[*] token[%d] => %s\n",index+1,"0"); //?
+    printf("[*] token[%d] => %s\n",index,"0"); //?
 
 }
 
@@ -72,53 +76,50 @@ void free_tokens(char **tokens)
     int index = 0;
     while (tokens[index])
     {
-        free(tokens[index]);
+        free(tokens[index]); // Part of stdlib.h
         index++;
     }
+    free(tokens); // Part of stdlib.h
 
 }
 
-char** tokenizeME(char* str){
-    int index = 0;
-    int p = 0;
-    int loop = 0;
-    char *tmp;
-    char** tokens = (char**) malloc((sizeof(str)) * sizeof(char*));
-
-    while (str[index])
-    {
-        printf("%x",str[index]);
-        if (str[index] != 20)
-        {
-            tmp = copy_str(&str[index],index);
-            tokens[index] = tmp;
-        }
-        index++;
-
-    }
-    return tokens;
-}
 
 /* Tokenize String */
 char** tokenize(char* str)
 {
     int index = 0;
-    int word_length = count_words(str);
-    char** tokens = (char**) malloc((word_length+1) * sizeof(char*));
+    int distance = 0;
 
-    while(index < word_length)
+    int get_total_number_of_tokens = count_words(str); // GET TOKEN COUNT, SO YOU KNOW HOW MANY THERE ARE !!!
+
+    // ALLOCATE MEMORY BASED ON LENGTH OF THE WHOLE STRING
+    char **new_storage = (char **)malloc(sizeof(char*) * (string_length(str)));
+
+    while(get_total_number_of_tokens > index)
     {
-        printf("[~] Hex String: %x\n",str[index]); // DELETE
-        str = word_start(str);
-        char* word = copy_str(str,index+1);
-        str = word_end(str);
-        tokens[index] = word;
 
+        str = word_start(str);
+
+        // find the distance between words separated by characters
+        distance = word_end(str) - str;
+
+        new_storage[index] = copy_str(str, distance);
+
+        // POINT TO NEXT WORD
+        str = word_end(str);
+
+        // UPDATE INDEX
         index++;
     }
-    return tokens;
+
+    new_storage[index] = '\0';
+
+    return new_storage;
 
 }
+
+
+
 
 /* Counts the number of words in the string argument. */
 int count_words(char *str)
@@ -140,19 +141,16 @@ int count_words(char *str)
    str does not contain any words. */
 char *word_start(char *str)
 {
-    int i;
-
-    if ( str == NULL) {
+    if (str == NULL) {
         return 0;
     }
-    while (str[i] != '\0')
-    {
-        if (non_space_char(str[i]) != 0)
-        {
-            return &str[i];
-        }
-        i++;
+
+    // ignore breaks in string
+    while (space_char(*str)) {
+        str++;
     }
+
+    return str;
 }
 
 /* Returns a pointer to the first space character in
@@ -161,6 +159,11 @@ char *word_start(char *str)
 char *word_end(char *str)
 {
     int i = 0;
+    if (*str == '\0')
+    {
+        return 0;
+    }
+
     while (str[i] != '\0') {
         if(space_char(str[i]) == 1)
         {
@@ -168,7 +171,6 @@ char *word_end(char *str)
         }
         i++;
     }
-    return 0;
 }
 
 /* Return true (non-zero) if c is a whitespace character
@@ -176,7 +178,7 @@ char *word_end(char *str)
    Zero terminators are not printable (therefore false) */
 int space_char(char c)
 {
-    if (c == ' '|| c == '\t')
+    if (c == ' '|| c == '\t' || c == '\0')
         return 1;
     return 0;
 }
@@ -186,7 +188,7 @@ int space_char(char c)
    Zero terminators are not printable (therefore false) */
 int non_space_char(char c)
 {
-    if ( c == ' ' || c == '\t' ||  c == '\0')
+    if (space_char(c) || c == '\0')
         return 0;
     return 1;
 }
