@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tokenizer.h"
-#include "tokenizer.c"
+#include "tokenizer.c" // REMOVE ME
 
 // Linked List (github.com/robustUTEP)
-
+#include "history.h"
+#include "history.c" // REMOVE ME
 
 // MAX_SIZE for INPUT BUFFER
 #define MAX_SIZE 100
@@ -13,6 +14,8 @@ int main()
 {
 
 	char scanner[MAX_SIZE];
+
+	List *history = init_history();
 
     /*
      * PROMPT
@@ -23,7 +26,7 @@ int main()
         printf("(Prompt)>\t");
         fgets(scanner,MAX_SIZE,stdin);
 
-        if (*scanner != 'q' && *scanner != '!')
+        if (*scanner != 'q' && *scanner != '!')         // QUIT button and HISTORY button
         {
             printf("\n[!] Your word is: %s\n", scanner);
 
