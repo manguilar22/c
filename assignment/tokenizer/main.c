@@ -3,10 +3,6 @@
 #include "tokenizer.h"
 #include "tokenizer.c" // REMOVE ME
 
-// Linked List (github.com/robustUTEP)
-#include "history.h"
-#include "history.c" // REMOVE ME
-
 // MAX_SIZE for INPUT BUFFER
 #define MAX_SIZE 100
 
@@ -15,8 +11,7 @@ int main()
 
 	char scanner[MAX_SIZE];
 
-	List *history = init_history();
-
+	
     /*
      * PROMPT
      */
